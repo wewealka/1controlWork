@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const MainContainer = styled.div`
     display: flex;
-    outline: 2px solid aqua;
+    outline: 3px solid aqua;
     border-radius: 5px;
     margin: 0 auto;  
     max-width: 500px; 
@@ -19,7 +19,7 @@ const Display = styled.div<DisplayProps>`
     display: flex;
     width: 100%;
     height: 50%;
-    outline: 2px solid aqua;
+    outline: 3px solid aqua;
     border-radius: 5px;
     margin: 0 auto;  
     margin-top: 20px;
@@ -29,7 +29,7 @@ const Display = styled.div<DisplayProps>`
     font-weight: bold;
     align-items:center;
     justify-content: center;
-    color: ${props => (props.isRed ? 'red' : 'black')};
+    color: ${props => (props.isRed ? 'red' : 'aqua')};
 `;
 
 const ButtonContainer = styled.div`
@@ -44,12 +44,12 @@ const Button = styled.button`
     flex: 1; 
     width:40%;
     height:60px;
-    outline: 2px solid aqua;
+    outline: 3px solid aqua;
     border-radius: 5px;
     margin: 0 10px; 
     background-color:#303846;
     margin-top: 70px;
-    color:black;
+    color:${props => (props.disabled ?"black": "aqua")};
     font-size:40px;
     font-weight: bold;
     text-align: center;
@@ -66,7 +66,7 @@ const Button2 = styled.button`
     margin: 0 10px; 
     background-color:#303846;
     margin-top: 70px;
-    color:black;
+    color: ${props => (props.disabled ?"black": "aqua")};
     font-size:40px;
     font-weight: bold;
     text-align: center;
