@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Counter } from "./counter/Counter";
 import { S } from "./stls/styles";
 import { Button } from "../components/Button";
@@ -9,13 +9,14 @@ export const Setter = () => {
     const [inputMaxValue, setInputMaxValue] = useState<number>(0);
     const [inputStartValue, setInputStartValue] = useState<number>(0);
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const initialStartValueRef = useRef<number | null>(null);
 
     const resetHandler = () => {
         setStartValue(inputStartValue);
     };
 
     const incHandler = () => {
-        setStartValue((prev) => (prev < maxValue ? prev + 1 : prev));
+        setStartValue(temp => temp + 1);
     };
 
     const setMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +36,28 @@ export const Setter = () => {
         }
         setMaxValue(inputMaxValue);
         setStartValue(inputStartValue);
+        if (initialStartValueRef.current === null) {
+            initialStartValueRef.current = inputStartValue;
+        }
+        localStorage.setItem('maxValue', JSON.stringify(inputMaxValue));
+        localStorage.setItem('startValue', JSON.stringify(inputStartValue));
         setIsEditing(false);
     };
+
+    useEffect(() => {
+        const savedMaxValue = localStorage.getItem('maxValue');
+        const savedStartValue = localStorage.getItem('startValue');
+        if (savedMaxValue) {
+            const parsedMaxValue = JSON.parse(savedMaxValue);
+            setMaxValue(parsedMaxValue);
+            setInputMaxValue(parsedMaxValue); 
+        }
+        if (savedStartValue) {
+            const parsedStartValue = JSON.parse(savedStartValue);
+            setStartValue(parsedStartValue);
+            setInputStartValue(parsedStartValue); 
+        }
+    }, []);
 
     return (
         <div style={{ display: "flex" }}>
